@@ -52,9 +52,9 @@ export default function CommentThread({
               exit={{ opacity: 0 }}
               className="text-sm"
             >
-              <span className="font-medium text-text">{c.author}</span>{" "}
+              <span className="font-semibold text-text">{c.author}</span>{" "}
               <span className="text-text/90">{c.body}</span>{" "}
-              <span className="font-mono text-[11px] text-muted">{timeAgo(c.created_at)}</span>
+              <span className="text-[11px] text-muted">{timeAgo(c.created_at)}</span>
             </motion.li>
           ))}
         </AnimatePresence>
@@ -65,18 +65,18 @@ export default function CommentThread({
           value={myName}
           onChange={(e) => onNameChange(e.target.value)}
           placeholder="名前"
-          className="w-20 shrink-0 rounded-lg border border-border bg-surface-2 px-2 py-1.5 text-xs text-text outline-none focus:border-accent"
+          className="w-20 shrink-0 rounded-lg border border-border bg-bg px-2 py-1.5 text-xs text-text outline-none focus:border-accent focus:bg-surface"
         />
         <input
           value={body}
           onChange={(e) => setBody(e.target.value)}
           placeholder="コメントする…"
-          className="flex-1 rounded-lg border border-border bg-surface-2 px-3 py-1.5 text-sm text-text outline-none placeholder:text-muted/60 focus:border-accent"
+          className="flex-1 rounded-lg border border-border bg-bg px-3 py-1.5 text-sm text-text outline-none placeholder:text-muted/70 focus:border-accent focus:bg-surface"
         />
         <button
           type="submit"
           disabled={!body.trim() || !myName.trim() || busy}
-          className="shrink-0 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-bg transition hover:brightness-110 disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-muted"
+          className="shrink-0 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-muted"
         >
           送信
         </button>

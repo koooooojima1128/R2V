@@ -4,34 +4,34 @@
 
 :root {
   --font-noto: "Noto Sans JP", system-ui, sans-serif;
-  --font-jbmono: "JetBrains Mono", ui-monospace, monospace;
-  color-scheme: dark;
+  --font-archivo: "Archivo", system-ui, sans-serif;
+  color-scheme: light;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
-  background: #0b0f19;
+  background: #f4f5f7;
 }
 
 body {
   font-family: var(--font-noto), system-ui, sans-serif;
-  color: #e7eaf3;
+  color: #16181c;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
-/* 背景の淡いグラデーション */
+/* 背景：ごく淡い都会的グラデーション */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(60rem 60rem at 15% -10%, rgba(56, 189, 248, 0.08), transparent 60%),
-    radial-gradient(50rem 50rem at 100% 0%, rgba(52, 211, 153, 0.06), transparent 55%);
+    radial-gradient(55rem 40rem at 12% -12%, rgba(31, 58, 95, 0.05), transparent 60%),
+    radial-gradient(45rem 40rem at 100% 0%, rgba(16, 24, 40, 0.035), transparent 55%);
 }
 
 @media (prefers-reduced-motion: reduce) {

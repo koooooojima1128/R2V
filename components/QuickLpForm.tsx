@@ -39,12 +39,15 @@ export default function QuickLpForm({ myName, onNameChange, onSubmit, onRecorded
     }
   }
 
+  const inputCls =
+    "w-full rounded-xl border border-border bg-bg px-3 py-2 text-sm text-text outline-none transition placeholder:text-muted/70 focus:border-accent focus:bg-surface";
+
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-3xl border border-border bg-surface/80 p-5 shadow-card backdrop-blur sm:p-6"
+      className="rounded-2xl border border-border bg-surface p-5 shadow-card sm:p-6"
     >
-      <h2 className="text-sm font-semibold text-text">クイック LP 操作</h2>
+      <h2 className="font-display text-sm font-bold text-text">クイック LP 操作</h2>
 
       {/* 誰が */}
       <label className="mt-4 block text-xs font-medium text-muted">誰が</label>
@@ -56,7 +59,7 @@ export default function QuickLpForm({ myName, onNameChange, onSubmit, onRecorded
             onClick={() => onNameChange(m.name)}
             className={`rounded-full border px-3 py-1.5 text-sm transition ${
               myName === m.name
-                ? "border-accent bg-accent/10 text-text"
+                ? "border-accent bg-accent/10 text-accent"
                 : "border-border text-muted hover:border-muted hover:text-text"
             }`}
           >
@@ -69,12 +72,12 @@ export default function QuickLpForm({ myName, onNameChange, onSubmit, onRecorded
         value={myName}
         onChange={(e) => onNameChange(e.target.value)}
         placeholder="または自由入力"
-        className="mt-2 w-full rounded-xl border border-border bg-surface-2 px-3 py-2 text-sm text-text outline-none placeholder:text-muted/60 focus:border-accent"
+        className={`mt-2 ${inputCls}`}
       />
 
       {/* 何 LP */}
       <label className="mt-4 block text-xs font-medium text-muted">
-        何 LP <span className="font-mono text-text">{formatLp(amount)}</span>
+        何 LP <span className="font-display font-semibold text-text">{formatLp(amount)}</span>
       </label>
       <div className="mt-2 flex flex-wrap gap-2">
         {siteConfig.quickAmounts.map((v) => (
@@ -82,7 +85,7 @@ export default function QuickLpForm({ myName, onNameChange, onSubmit, onRecorded
             type="button"
             key={v}
             onClick={() => setAmount(v)}
-            className={`rounded-lg border px-3 py-1.5 font-mono text-sm transition ${
+            className={`rounded-lg border px-3 py-1.5 font-display text-sm font-medium transition ${
               amount === v
                 ? v > 0
                   ? "border-pos bg-pos/10 text-pos"
@@ -98,7 +101,7 @@ export default function QuickLpForm({ myName, onNameChange, onSubmit, onRecorded
           step="0.1"
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
-          className="w-24 rounded-lg border border-border bg-surface-2 px-3 py-1.5 text-right font-mono text-sm text-text outline-none focus:border-accent"
+          className="w-24 rounded-lg border border-border bg-bg px-3 py-1.5 text-right font-display text-sm text-text outline-none focus:border-accent focus:bg-surface"
         />
       </div>
 
@@ -107,8 +110,8 @@ export default function QuickLpForm({ myName, onNameChange, onSubmit, onRecorded
       <input
         value={reason}
         onChange={(e) => setReason(e.target.value)}
-        placeholder="例：バイト先で節約 / 衝動買い"
-        className="mt-2 w-full rounded-xl border border-border bg-surface-2 px-3 py-2 text-sm text-text outline-none placeholder:text-muted/60 focus:border-accent"
+        placeholder="例：ブナ山バイト / ポケカ購入"
+        className={`mt-2 ${inputCls}`}
       />
 
       {err && <p className="mt-3 text-xs text-neg">{err}</p>}
@@ -120,8 +123,8 @@ export default function QuickLpForm({ myName, onNameChange, onSubmit, onRecorded
         className={`mt-4 w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
           canSubmit
             ? amount >= 0
-              ? "bg-pos text-bg hover:brightness-110"
-              : "bg-neg text-bg hover:brightness-110"
+              ? "bg-pos text-white hover:brightness-105"
+              : "bg-neg text-white hover:brightness-105"
             : "cursor-not-allowed bg-surface-2 text-muted"
         }`}
       >

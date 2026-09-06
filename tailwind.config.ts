@@ -10,33 +10,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#0B0F19",
-        surface: "#121826",
-        "surface-2": "#161D2E",
-        border: "#232B3D",
-        text: "#E7EAF3",
-        muted: "#8A93A7",
-        pos: "#34D399",
-        neg: "#FB7185",
-        accent: "#38BDF8",
+        // 白基調・都会的（クールペーパー + グラファイト + エグゼクティブブルー）
+        bg: "#F4F5F7",
+        surface: "#FFFFFF",
+        "surface-2": "#EEF0F3",
+        border: "#E2E5EA",
+        text: "#16181C",
+        muted: "#6E747E",
+        pos: "#0F9D6B",
+        neg: "#DC2B3A",
+        accent: "#1F3A5F",
       },
       fontFamily: {
         sans: ["var(--font-noto)", "system-ui", "sans-serif"],
-        mono: ["var(--font-jbmono)", "ui-monospace", "SFMono-Regular", "monospace"],
+        display: ["var(--font-archivo)", "var(--font-noto)", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        card: "0 1px 0 0 rgba(255,255,255,0.04) inset, 0 8px 30px -12px rgba(0,0,0,0.6)",
-        glow: "0 0 0 1px rgba(56,189,248,0.25), 0 0 40px -8px rgba(56,189,248,0.35)",
-      },
-      keyframes: {
-        "pulse-ring": {
-          "0%": { boxShadow: "0 0 0 0 rgba(52,211,153,0.35)" },
-          "70%": { boxShadow: "0 0 0 12px rgba(52,211,153,0)" },
-          "100%": { boxShadow: "0 0 0 0 rgba(52,211,153,0)" },
-        },
-      },
-      animation: {
-        "pulse-ring": "pulse-ring 2.4s cubic-bezier(0.4,0,0.6,1) infinite",
+        card: "0 1px 2px rgba(16,24,40,0.04), 0 6px 20px -8px rgba(16,24,40,0.10)",
+        lift: "0 1px 2px rgba(16,24,40,0.05), 0 14px 40px -14px rgba(16,24,40,0.16)",
       },
     },
   },

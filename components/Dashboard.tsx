@@ -2,14 +2,14 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import ConnBadge from "@/components/ConnBadge";
 import ProgressHero from "@/components/ProgressHero";
+import RankCard from "@/components/RankCard";
 import QuickLpForm from "@/components/QuickLpForm";
 import Timeline from "@/components/Timeline";
 import { useMyName } from "@/hooks/useMyName";
 import { useR2L } from "@/hooks/useR2L";
 import { siteConfig } from "@/lib/site";
-import { moteToast } from "@/lib/format";
+import { recordToast } from "@/lib/format";
 
 /** 全員共通の1画面。誰がアクセスしても同じデータをリアルタイム表示。 */
 export default function Dashboard() {
@@ -20,7 +20,6 @@ export default function Dashboard() {
     total,
     goal,
     loading,
-    conn,
     error,
     addLp,
     addComment,
@@ -35,19 +34,22 @@ export default function Dashboard() {
   }, [toast]);
 
   const handleRecorded = useCallback((amount: number) => {
-    setToast(moteToast(amount));
+    setToast(recordToast(amount));
   }, []);
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
-      <header className="mb-6 flex items-center justify-between">
+    <main className="mx-auto max-w-2xl px-4 py-8 sm:py-14">
+      <header className="mb-7 flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-bold tracking-tight text-text">
-            {siteConfig.name} <span className="text-muted">{siteConfig.fullName}</span>
+          <h1 className="font-display text-lg font-extrabold tracking-tight text-text">
+            {siteConfig.name}{" "}
+            <span className="font-semibold text-muted">{siteConfig.fullName}</span>
           </h1>
           <p className="text-xs text-muted">{siteConfig.tagline}</p>
         </div>
-        <ConnBadge conn={conn} />
+        <span className="rounded-full border border-border bg-surface px-3 py-1 font-display text-xs font-medium text-muted">
+          目標 {goal} LP
+        </span>
       </header>
 
       {error && (
@@ -56,8 +58,9 @@ export default function Dashboard() {
         </p>
       )}
 
-      <div className="space-y-6">
+      <div className="space-y-5">
         <ProgressHero total={total} goal={goal} />
+        <RankCard total={total} />
         <QuickLpForm
           myName={myName}
           onNameChange={setName}
@@ -86,7 +89,7 @@ export default function Dashboard() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none fixed inset-x-0 bottom-6 z-50 mx-auto w-fit max-w-[90vw] rounded-full border border-border bg-surface-2/95 px-4 py-2 text-center text-sm text-text shadow-card backdrop-blur"
+            className="pointer-events-none fixed inset-x-0 bottom-6 z-50 mx-auto w-fit max-w-[90vw] rounded-full border border-border bg-surface px-4 py-2 text-center text-sm font-medium text-text shadow-lift"
           >
             {toast}
           </motion.div>

@@ -1,9 +1,9 @@
 /**
- * R2L 全体の設定。文言・目標値・メンバー・「モテ度」段階はここに集約する。
+ * R2L 全体の設定。文言・目標値・メンバー・「称号」段階はここに集約する。
  * - goalLp: 目標 LP（= レクサス 500万円）。1 LP = yenPerLp 円。
  * - quickAmounts: クイック操作ボタンの候補（LP）。
  * - members: 入力補助用のメンバー。
- * - moteLevels: 進捗率(%)に応じた「爆モテ度」。min は達成率のしきい値。
+ * - ranks: 累計 LP に応じた称号。min は LP のしきい値（%ではない）。
  */
 export const siteConfig = {
   name: "R2L",
@@ -27,18 +27,48 @@ export const siteConfig = {
   ] as { name: string; emoji: string }[],
 
   /**
-   * 爆モテ度メーター。達成率(%)が min 以上で最後に一致した段階を表示する。
-   * レクサスに近づくほどモテる、というおふざけモチベーション装置。
+   * 称号システム。累計 LP が min 以上で最後に一致した称号を表示する。
+   * アルトからレクサスへ、モテ男への階段を上るおふざけモチベーション装置。
    */
-  moteLevels: [
-    { min: 0, label: "モテ度 0", note: "まだ何も持っていない" },
-    { min: 15, label: "かろうじてモテ", note: "「車は親の」と正直に答える段階" },
-    { min: 35, label: "二度見されるモテ", note: "信号待ちで視線を感じる" },
-    { min: 55, label: "合コンで話題のモテ", note: "初手で名前を覚えられる" },
-    { min: 75, label: "助手席プレミアム", note: "予約が入りはじめる" },
-    { min: 90, label: "モテ臨界点", note: "あと一歩で頂点" },
-    { min: 100, label: "爆モテ確定 🔥", note: "レクサス納車。ここから人生が変わる" },
-  ] as { min: number; label: string; note: string }[],
+  ranks: [
+    {
+      min: 0,
+      name: "Alto Solitary",
+      ja: "アルト・ソリタリー / 孤高の軽自動車",
+      note: "助手席はまだ空席。愛車アルトと共に一人静かに夜道を走る孤独な男。",
+    },
+    {
+      min: 100,
+      name: "HIMARAYA Riser",
+      ja: "HIMARAYA・ライザー / 期待のバイト男子",
+      note: "ヒマラヤで爽やかさを振りまき、徐々にモテの基礎体力をつけ始めた段階。",
+    },
+    {
+      min: 200,
+      name: "F SPORT Seducer",
+      ja: "Fスポーツ・セデューサー / 魅惑の候補生",
+      note: "男としての魅力が急上昇。レクサスのスポーティな色気を醸し出し、女子の視線を集め始める。",
+    },
+    {
+      min: 300,
+      name: "Lexus Charisma",
+      ja: "レクサス・カリスマ / 助手席争奪圏",
+      note: "300LP突破。「今度レクサスでドライブいかない？」が冗談ではなくなるモテ男予備軍。",
+    },
+    {
+      min: 400,
+      name: "Playboy Elite",
+      ja: "プレイボーイ・エリート / 夜のドライブマスター",
+      note: "圧倒的な資金力と大人の余裕。女子が自ら助手席に乗りたがるラグジュアリーな領域。",
+    },
+    {
+      min: 500,
+      name: "Ultimate Lexus Lover",
+      ja: "アルティメット・レクサス・ラバー / 伝説のモテ男",
+      note: "500 LP完全達成。アルトから最高峰のレクサスオーナーへ即位し、遊び場（夜の街）を制覇した伝説。",
+    },
+  ] as { min: number; name: string; ja: string; note: string }[],
 };
 
 export type SiteConfig = typeof siteConfig;
+export type Rank = SiteConfig["ranks"][number];

@@ -26,12 +26,12 @@ export default function Timeline({
 }: Props) {
   return (
     <section>
-      <h2 className="mb-3 text-sm font-semibold text-text">タイムライン</h2>
+      <h2 className="mb-3 font-display text-sm font-bold text-text">タイムライン</h2>
 
       {loading ? (
         <p className="text-sm text-muted">読み込み中…</p>
       ) : logs.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-border p-6 text-center text-sm text-muted">
+        <p className="rounded-xl border border-dashed border-border bg-surface p-6 text-center text-sm text-muted">
           まだ記録がありません。最初の LP を入れてみよう。
         </p>
       ) : (

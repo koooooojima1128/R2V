@@ -33,12 +33,12 @@ export default function LogCard({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-      className="rounded-2xl border border-border bg-surface/80 p-4 shadow-card backdrop-blur"
+      className="rounded-xl border border-border bg-surface p-4 shadow-card"
     >
       <div className="flex items-start gap-3">
         <div
-          className={`shrink-0 rounded-xl border px-3 py-2 text-center font-mono text-lg font-bold ${
-            positive ? "border-pos/30 bg-pos/10 text-pos" : "border-neg/30 bg-neg/10 text-neg"
+          className={`shrink-0 rounded-lg border px-3 py-2 text-center font-display text-lg font-bold ${
+            positive ? "border-pos/25 bg-pos/10 text-pos" : "border-neg/25 bg-neg/10 text-neg"
           }`}
         >
           {formatLp(log.amount)}
@@ -48,7 +48,7 @@ export default function LogCard({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-text">{log.author}</span>
-            <span className="font-mono text-[11px] text-muted">{timeAgo(log.created_at)}</span>
+            <span className="text-[11px] text-muted">{timeAgo(log.created_at)}</span>
           </div>
           <p className="mt-0.5 break-words text-sm text-text/90">
             {log.reason || <span className="text-muted">（理由なし）</span>}
@@ -65,7 +65,7 @@ export default function LogCard({
               onClick={() => {
                 if (confirm("この記録を取り消しますか？")) void onDelete(log.id);
               }}
-              className="text-muted/70 transition hover:text-neg"
+              className="text-muted/80 transition hover:text-neg"
             >
               取り消し
             </button>

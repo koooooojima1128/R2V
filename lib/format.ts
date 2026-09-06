@@ -1,5 +1,5 @@
 /**
- * 表示用の整形ヘルパー。LP・円換算・相対時間・進捗率・爆モテ度。
+ * 表示用の整形ヘルパー。LP・円換算・相対時間・進捗率・称号。
  */
 import { siteConfig } from "@/lib/site";
 
@@ -39,24 +39,23 @@ export function progressPct(total: number, goal: number): number {
   return Math.min(100, Math.max(0, (total / goal) * 100));
 }
 
-/** 達成率(%)に対応する「爆モテ度」段階。 */
-export function moteLevel(pct: number) {
-  let current = siteConfig.moteLevels[0];
-  for (const level of siteConfig.moteLevels) {
-    if (pct >= level.min) current = level;
+/** 累計 LP に対応する現在の称号。 */
+export function currentRank(total: number) {
+  let rank = siteConfig.ranks[0];
+  for (const r of siteConfig.ranks) {
+    if (total >= r.min) rank = r;
   }
-  return current;
+  return rank;
 }
 
-/** 達成率(%)を ❤️‍🔥 5 段階で可視化。 */
-export function moteHearts(pct: number): string {
-  const filled = Math.max(0, Math.min(5, Math.round(pct / 20)));
-  return "❤️‍🔥".repeat(filled) + "🤍".repeat(5 - filled);
+/** 次の称号（最上位に到達済みなら null）。 */
+export function nextRank(total: number) {
+  return siteConfig.ranks.find((r) => r.min > total) ?? null;
 }
 
 /** LP 記録時に出すおふざけトーストの文言。 */
-export function moteToast(amount: number): string {
+export function recordToast(amount: number): string {
   const lp = formatLp(amount);
-  if (amount >= 0) return `${lp} LP　モテ度メーターがカタッと動いた`;
-  return `${lp} LP　レクサスが遠のき、モテも後退…`;
+  if (amount >= 0) return `${lp} LP　称号ゲージが上がった`;
+  return `${lp} LP　レクサスが遠のいた…`;
 }
