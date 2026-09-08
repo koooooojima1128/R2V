@@ -1,0 +1,75 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { siteConfig } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: `サポート — ${siteConfig.name}`,
+  description: `${siteConfig.name} の使い方とお問い合わせ。`,
+};
+
+/** App Store 提出前に、公開してよい連絡先へ置き換えてください。 */
+const CONTACT = "（連絡先メールアドレスを記入）";
+
+export default function SupportPage() {
+  return (
+    <main className="mx-auto max-w-2xl px-5 py-12 sm:py-16">
+      <Link href="/" className="text-xs font-medium text-muted transition hover:text-text">
+        ← {siteConfig.name} にもどる
+      </Link>
+
+      <h1 className="mt-6 font-display text-2xl font-extrabold tracking-tight text-text">
+        サポート
+      </h1>
+
+      <div className="mt-8 space-y-8 text-sm leading-relaxed text-text/90">
+        <section>
+          <h2 className="font-display text-base font-bold text-text">これは何？</h2>
+          <p className="mt-2 text-text/80">
+            {siteConfig.name}（{siteConfig.fullName}）は、友人グループで目標金額を
+            共同で貯めるためのポイント（LP）管理アプリです。1 LP = 1万円、
+            目標は {siteConfig.goalLp} LP。誰かが記録すると全員の画面に
+            リアルタイムで反映されます。
+          </p>
+        </section>
+
+        <section>
+          <h2 className="font-display text-base font-bold text-text">使い方</h2>
+          <ol className="mt-2 list-decimal space-y-1 pl-5 text-text/80">
+            <li>「クイック LP 操作」で、自分の名前・増減する LP・理由を入力</li>
+            <li>「記録」を押すと、合計・進捗バー・称号が全員分更新される</li>
+            <li>各記録にコメント（応援・野次）を残せる</li>
+            <li>間違えたら記録の「取り消し」で削除できる</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 className="font-display text-base font-bold text-text">よくある質問</h2>
+          <p className="mt-2 font-medium text-text">Q. データは誰に見えますか？</p>
+          <p className="text-text/80">
+            アプリを開いた全員に見えます。ログインはありません。機微な個人情報は
+            入力しないでください。
+          </p>
+          <p className="mt-3 font-medium text-text">Q. 反映されません</p>
+          <p className="text-text/80">
+            ネットワーク接続を確認し、アプリを再起動してください。オフライン中の
+            変更は再接続時に同期されます。
+          </p>
+          <p className="mt-3 font-medium text-text">Q. データを全部消したい</p>
+          <p className="text-text/80">下記の連絡先までご連絡ください。</p>
+        </section>
+
+        <section>
+          <h2 className="font-display text-base font-bold text-text">お問い合わせ</h2>
+          <p className="mt-2 text-text/80">{CONTACT}</p>
+          <p className="mt-2 text-text/80">
+            プライバシーについては{" "}
+            <Link href="/privacy" className="text-accent underline">
+              プライバシーポリシー
+            </Link>
+            をご覧ください。
+          </p>
+        </section>
+      </div>
+    </main>
+  );
+}

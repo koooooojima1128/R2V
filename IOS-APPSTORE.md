@@ -81,14 +81,14 @@ https://appstoreconnect.apple.com → **My Apps → ＋ → New App**
 
 ## 4. 提出アセット チェックリスト
 
-- [ ] アプリアイコン 1024×1024 PNG（角丸なし・透過なし）
-- [ ] スクリーンショット（6.7" 必須、あれば 6.5" / 5.5" / iPad）
-- [ ] 説明文（例）：
-  > 友達みんなで目標金額を貯めるためのポイント共有アプリ。
-  > 「誰が・いくら・理由」を記録するとリアルタイムで全員の画面に反映。
-  > 貯まるほど称号がアップグレードします。
-- [ ] プライバシーポリシー URL（§5）
-- [ ] サポート URL
+**文面（説明・キーワード・カテゴリ・App Privacy 回答・審査メモ・スクショの撮り方）は
+[`APPSTORE-LISTING.md`](APPSTORE-LISTING.md) にコピペ用でまとめてある。**
+
+- [ ] アプリアイコン 1024×1024 PNG … `scripts/make-icon.mjs` が自動生成（差し替えたい場合は `resources/icon.png` を直接置く）
+- [ ] スクリーンショット 1290×2796（6.7" 必須）… 撮り方は APPSTORE-LISTING.md 参照
+- [ ] プライバシーポリシー URL … `https://r2-v.vercel.app/privacy`（`app/privacy/page.tsx`）
+- [ ] サポート URL … `https://r2-v.vercel.app/support`（`app/support/page.tsx`）
+- [ ] `app/privacy/page.tsx` と `app/support/page.tsx` の `CONTACT` を実連絡先に置換
 
 ---
 

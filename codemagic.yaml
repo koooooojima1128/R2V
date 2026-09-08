@@ -44,13 +44,10 @@ workflows:
           if [ ! -d "ios" ]; then npx cap add ios; fi
           npx cap sync ios
 
-      - name: アプリアイコン生成（resources/icon.png があれば）
+      - name: アプリアイコン生成
         script: |
-          if [ -f "resources/icon.png" ]; then
-            npx @capacitor/assets generate --ios --iconBackgroundColor '#16181C' --iconBackgroundColorDark '#16181C'
-          else
-            echo "resources/icon.png が無いためデフォルトアイコンを使用します"
-          fi
+          node scripts/make-icon.mjs
+          npx @capacitor/assets generate --ios --iconBackgroundColor '#16181C' --iconBackgroundColorDark '#16181C'
 
       - name: バージョン / ビルド番号
         script: |
