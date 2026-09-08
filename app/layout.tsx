@@ -21,6 +21,12 @@ export const metadata: Metadata = {
   title: `${siteConfig.name} — ${siteConfig.fullName}`,
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: siteConfig.name,
+    statusBarStyle: "default",
+  },
 };
 
 export const viewport: Viewport = {
