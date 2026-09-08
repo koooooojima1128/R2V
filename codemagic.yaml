@@ -34,7 +34,7 @@ workflows:
       cocoapods: default
     scripts:
       - name: npm install
-        script: npm ci
+        script: npm install --no-audit --no-fund
 
       - name: Web を静的書き出し (out/)
         script: npm run build:mobile
