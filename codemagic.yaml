@@ -63,19 +63,24 @@ workflows:
       - name: コード署名の準備
         script: |
           keychain initialize
-          # 配布証明書が無ければ新規作成（秘密鍵ごとディスク保存）
-          app-store-connect certificates create \
-            --type IOS_DISTRIBUTION --save \
-            || echo "証明書はすでに存在（作成スキップ）"
+          # 秘密鍵を生成し、その鍵で新規の配布証明書＋App Store プロファイルを作成。
+          # 注: ビルドのたびに新しい証明書が作られる。Apple の上限（配布証明書 2〜3枚）
+          # に達したら、作成済み .p12 を Codemagic に保存する方式へ切り替えること。
+          CERT_KEY="$(mktemp)"
+          openssl genrsa 2048 > "$CERT_KEY"
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --platform IOS \
+            --type IOS_APP_STORE \
+            --certificate-key=@file:"$CERT_KEY" \
+            --create
           keychain add-certificates
+          xcode-project use-profiles --project "ios/App/App.xcodeproj"
 
       - name: IPA をビルド
         script: |
           xcode-project build-ipa \
             --workspace "$XCODE_WORKSPACE" \
-            --scheme "$XCODE_SCHEME" \
-            --archive-xcargs "DEVELOPMENT_TEAM=$APPLE_TEAM_ID CODE_SIGN_STYLE=Automatic" \
-            --archive-flags "-allowProvisioningUpdates"
+            --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
