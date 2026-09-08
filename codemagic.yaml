@@ -1,0 +1,86 @@
+# Codemagic — Mac を持たずに iOS アプリをビルド & App Store Connect へ提出する。
+#
+# 事前準備（Codemagic の管理画面で1回だけ）:
+#  1. codemagic.io に GitHub でログイン → このリポジトリ (R2V) を Add application
+#  2. Teams → Integrations → App Store Connect
+#       App Store Connect(→ Users and Access → Integrations → App Store Connect API)で
+#       API キー(.p8 / Key ID / Issuer ID)を発行してアップロード。
+#       付けた名前を下の `integrations.app_store_connect` に書く。
+#  3. Environment variables で変数グループ `supabase` を作成し、次を追加:
+#       NEXT_PUBLIC_SUPABASE_URL       = https://atbkhwlhtpkmpgysvlyt.supabase.co
+#       NEXT_PUBLIC_SUPABASE_ANON_KEY  = sb_publishable_...
+#  4. 下の BUNDLE_ID を自分のものに変更（例 com.koooooojima.r2l）。
+#     developer.apple.com → Certificates, IDs & Profiles → Identifiers で
+#     同じ ID を事前登録しておく。
+#  5. アプリアイコン: resources/icon.png (1024x1024, 透過なし) を置くと自動生成。
+#     無い場合はデフォルトアイコンでビルドされる（審査で要差し替え）。
+
+workflows:
+  ios-appstore:
+    name: R2L iOS – App Store
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: R2L_ASC_API_KEY   # ← 手順2で付けた統合名に変更
+    environment:
+      groups:
+        - supabase
+      vars:
+        BUNDLE_ID: "com.example.r2l"        # ← 自分の Bundle ID に変更
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+      node: 20
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: npm install
+        script: npm ci
+
+      - name: Web を静的書き出し (out/)
+        script: npm run build:mobile
+
+      - name: iOS プラットフォームを用意
+        script: |
+          if [ ! -d "ios" ]; then npx cap add ios; fi
+          npx cap sync ios
+
+      - name: アプリアイコン生成（resources/icon.png があれば）
+        script: |
+          if [ -f "resources/icon.png" ]; then
+            npx @capacitor/assets generate --ios --iconBackgroundColor '#16181C' --iconBackgroundColorDark '#16181C'
+          else
+            echo "resources/icon.png が無いためデフォルトアイコンを使用します"
+          fi
+
+      - name: バージョン / ビルド番号
+        script: |
+          cd ios/App
+          agvtool new-marketing-version 1.0.0
+          agvtool new-version -all $(( $(date +%s) / 60 ))
+
+      - name: CocoaPods
+        script: |
+          cd ios/App && pod install
+
+      - name: コード署名（自動）
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE --create
+          keychain add-certificates
+          xcode-project use-profiles
+
+      - name: IPA をビルド
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        # 審査への提出は App Store Connect 画面で手動が安全（下は自動提出したい場合）
+        # submit_to_app_store: false

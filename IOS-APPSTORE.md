@@ -94,14 +94,12 @@ https://appstoreconnect.apple.com → **My Apps → ＋ → New App**
 
 ## 5. プライバシーポリシー（必須）
 
-名前・投稿内容・コメントを Supabase に保存しているため、ポリシーページが要る。
-`/privacy` ページをこのアプリ内に作れる（別途依頼）。最低限の記載事項：
+アプリ内に **`/privacy` ページを用意済み** → 公開URLは
+`https://r2-v.vercel.app/privacy`（独自ドメインにしたらそれに合わせる）。
+App Store Connect の「プライバシーポリシー URL」にこれを入れる。
 
-- 収集する情報：ユーザーが入力した表示名、LP記録、コメント
-- 利用目的：アプリ機能の提供（共有ダッシュボード表示）
-- 第三者提供：なし（保存先は Supabase）
-- 保持期間 / 削除依頼の連絡先
-- トラッキング・広告：なし
+**提出前にやること**：[`app/privacy/page.tsx`](app/privacy/page.tsx) の `CONTACT` を、
+公開してよい連絡先メールアドレスに置き換えて push する（いまはプレースホルダ）。
 
 ---
 
@@ -136,12 +134,14 @@ Mac を持っていない場合、クラウド macOS の CI を使う。
 1. https://codemagic.io に GitHub でログイン → `R2V` リポジトリを追加
 2. Codemagic の **Teams → Integrations → Apple Developer Portal** に
    App Store Connect API キー（App Store Connect → Users and Access → Integrations で発行）を登録
-3. リポジトリに `codemagic.yaml` を置く（別途作成可）。内容の骨子：
-   - `npm ci && npm run build:mobile`
-   - `npx cap add ios && npx cap sync ios`
-   - CocoaPods インストール → `xcode-project build-ipa`
-   - `app-store-connect publish`（TestFlight / 審査へ自動アップロード）
-4. Codemagic 上でビルド実行 → App Store Connect にビルドが届く → §3〜§7 の提出作業はブラウザで実施
+3. **`codemagic.yaml` はリポジトリに用意済み**。冒頭コメントの手順どおり、
+   Codemagic 管理画面で次を設定：
+   - App Store Connect API キー統合（名前を `integrations.app_store_connect` に反映）
+   - 変数グループ `supabase`（`NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`）
+   - `BUNDLE_ID` を自分のものに変更（developer.apple.com で同じIDを事前登録）
+   - `resources/icon.png`（1024×1024）を置く
+4. Codemagic でワークフロー **ios-appstore** を実行 → IPA がビルドされ TestFlight に届く
+   → §3〜§7 の提出作業（メタデータ入力・審査提出）はブラウザで実施
 
 > それでも Apple Developer Program（$99）と、アイコン・スクショ・ポリシー等の提出物は必要。
 
