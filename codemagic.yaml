@@ -62,6 +62,11 @@ workflows:
       - name: コード署名（自動）
         script: |
           keychain initialize
+          # 配布証明書が無ければ新規作成（秘密鍵ごとディスク保存）
+          app-store-connect certificates create \
+            --type IOS_DISTRIBUTION --save \
+            || echo "証明書はすでに存在（作成スキップ）"
+          # バンドルIDと App Store プロビジョニングプロファイルを作成・取得
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE --create
           keychain add-certificates
@@ -71,8 +76,7 @@ workflows:
         script: |
           xcode-project build-ipa \
             --workspace "$XCODE_WORKSPACE" \
-            --scheme "$XCODE_SCHEME" \
-            --archive-flags="-allowProvisioningUpdates"
+            --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
