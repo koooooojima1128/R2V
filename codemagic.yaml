@@ -26,7 +26,7 @@ workflows:
       groups:
         - supabase
       vars:
-        BUNDLE_ID: "com.example.r2l"        # ← 自分の Bundle ID に変更
+        BUNDLE_ID: "com.roadtolexus.r2l"        # ← 自分の Bundle ID に変更
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
       node: 20

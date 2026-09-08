@@ -8,7 +8,7 @@ import type { CapacitorConfig } from "@capacitor/cli";
  *   「オンライン専用ラッパー」になる（審査で 4.2 却下されやすいので非推奨）。
  */
 const config: CapacitorConfig = {
-  appId: "com.example.r2l",
+  appId: "com.roadtolexus.r2l",
   appName: "R2L",
   webDir: "out",
   ios: {
