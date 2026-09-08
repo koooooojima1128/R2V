@@ -51,27 +51,10 @@ export default function QuickLpForm({ myName, onNameChange, onSubmit, onRecorded
 
       {/* 誰が */}
       <label className="mt-4 block text-xs font-medium text-muted">誰が</label>
-      <div className="mt-2 flex flex-wrap gap-2">
-        {siteConfig.members.map((m) => (
-          <button
-            type="button"
-            key={m.name}
-            onClick={() => onNameChange(m.name)}
-            className={`rounded-full border px-3 py-1.5 text-sm transition ${
-              myName === m.name
-                ? "border-accent bg-accent/10 text-accent"
-                : "border-border text-muted hover:border-muted hover:text-text"
-            }`}
-          >
-            {m.emoji ? <span className="mr-1">{m.emoji}</span> : null}
-            {m.name}
-          </button>
-        ))}
-      </div>
       <input
         value={myName}
         onChange={(e) => onNameChange(e.target.value)}
-        placeholder="または自由入力"
+        placeholder="あなたの名前"
         className={`mt-2 ${inputCls}`}
       />
 

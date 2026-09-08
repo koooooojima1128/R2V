@@ -1,8 +1,7 @@
 /**
- * R2L 全体の設定。文言・目標値・メンバー・「称号」段階はここに集約する。
+ * R2L 全体の設定。文言・目標値・「称号」段階はここに集約する。
  * - goalLp: 目標 LP（= レクサス 500万円）。1 LP = yenPerLp 円。
  * - quickAmounts: クイック操作ボタンの候補（LP）。
- * - members: 入力補助用のメンバー。
  * - ranks: 累計 LP に応じた称号。min は LP のしきい値（%ではない）。
  */
 export const siteConfig = {
@@ -18,13 +17,6 @@ export const siteConfig = {
   yenPerLp: 10_000,
   /** クイック操作ボタンの候補（円ではなく LP）。 */
   quickAmounts: [-3, -1, -0.5, 0.5, 1, 3] as number[],
-
-  /** 入力補助用のメンバー。名前は自由に変更（schema.sql の seed と揃えると綺麗）。 */
-  members: [
-    { name: "きじま", emoji: "" },
-    { name: "ゆすけう", emoji: "" },
-    { name: "かれ", emoji: "" },
-  ] as { name: string; emoji: string }[],
 
   /**
    * 称号システム。累計 LP が min 以上で最後に一致した称号を表示する。
