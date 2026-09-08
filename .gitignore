@@ -12,3 +12,10 @@
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# Capacitor / iOS（Mac 上で生成・ビルドされる中間物）
+/ios/App/Pods
+/ios/App/App/public
+/ios/DerivedData
+/ios/App/build
+*.xcuserstate
