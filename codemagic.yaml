@@ -87,6 +87,7 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
-        submit_to_testflight: true
-        # 審査への提出は App Store Connect 画面で手動が安全（下は自動提出したい場合）
-        # submit_to_app_store: false
+        # App Store Connect にアップロードのみ（内部TestFlight/審査提出は画面から手動）。
+        # 外部TestFlightベータ審査に出したい場合のみ submit_to_testflight: true
+        # （その際は App Store Connect でテスト情報の入力が必要）。
+        submit_to_testflight: false
