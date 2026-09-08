@@ -65,9 +65,7 @@ workflows:
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE --create
           keychain add-certificates
-          xcode-project use-profiles \
-            --project "ios/App/App.xcodeproj" \
-            --scheme "$XCODE_SCHEME"
+          xcode-project use-profiles --project "ios/App/App.xcodeproj"
 
       - name: IPA をビルド
         script: |
