@@ -15,9 +15,9 @@ Phase 5 で App Store Connect のフォームに貼り付ける文面。日本�
 | セカンダリカテゴリ | ライフスタイル（Lifestyle） |
 | 年齢レーティング | 4+（すべての質問「なし」） |
 | 価格 | 無料 |
-| サポート URL | `https://r2-v.vercel.app/support` |
+| サポート URL | `https://road-to-lexus.vercel.app/support` |
 | マーケティング URL | （空欄で可） |
-| プライバシーポリシー URL | `https://r2-v.vercel.app/privacy` |
+| プライバシーポリシー URL | `https://road-to-lexus.vercel.app/privacy` |
 | バージョン | `1.0.0` |
 
 ---
@@ -88,8 +88,8 @@ Supabase Realtime により、あるユーザーの操作が他の全ユーザ�
 任意の名前・数値・理由を入力し「記録」を押すと、タイムラインと合計値が更新されることを
 ご確認ください。データはテスト後に削除いただいて問題ありません。
 
-プライバシーポリシー: https://r2-v.vercel.app/privacy
-サポート: https://r2-v.vercel.app/support
+プライバシーポリシー: https://road-to-lexus.vercel.app/privacy
+サポート: https://road-to-lexus.vercel.app/support
 ```
 
 > ⚠️ それでも Guideline 4.2（最低限の機能）で却下される場合があります。
@@ -102,7 +102,7 @@ Supabase Realtime により、あるユーザーの操作が他の全ユーザ�
 
 - 必要サイズ：**1290 × 2796 px**（縦）。最低1枚、推奨3〜5枚。
 - 用意の仕方（Macなしでも可）：
-  1. PC の Chrome で `https://r2-v.vercel.app` を開く
+  1. PC の Chrome で `https://road-to-lexus.vercel.app` を開く
   2. F12 → デバイスツールバー（Ctrl+Shift+M）→ 解像度を `430 × 932`、DPR を `3` に設定
   3. 「クイック LP 操作」でサンプル記録をいくつか入れて画面を作る
   4. デバイスツールバーの「Capture screenshot」で保存 → 1290×2796 になっているか確認

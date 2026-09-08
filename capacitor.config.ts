@@ -15,7 +15,7 @@ const config: CapacitorConfig = {
     contentInset: "always",
   },
   // server: {
-  //   url: "https://r2-v.vercel.app",
+  //   url: "https://road-to-lexus.vercel.app",
   //   cleartext: false,
   // },
 };

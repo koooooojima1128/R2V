@@ -86,8 +86,8 @@ https://appstoreconnect.apple.com → **My Apps → ＋ → New App**
 
 - [ ] アプリアイコン 1024×1024 PNG … `scripts/make-icon.mjs` が自動生成（差し替えたい場合は `resources/icon.png` を直接置く）
 - [ ] スクリーンショット 1290×2796（6.7" 必須）… 撮り方は APPSTORE-LISTING.md 参照
-- [ ] プライバシーポリシー URL … `https://r2-v.vercel.app/privacy`（`app/privacy/page.tsx`）
-- [ ] サポート URL … `https://r2-v.vercel.app/support`（`app/support/page.tsx`）
+- [ ] プライバシーポリシー URL … `https://road-to-lexus.vercel.app/privacy`（`app/privacy/page.tsx`）
+- [ ] サポート URL … `https://road-to-lexus.vercel.app/support`（`app/support/page.tsx`）
 - [ ] `app/privacy/page.tsx` と `app/support/page.tsx` の `CONTACT` を実連絡先に置換
 
 ---
@@ -95,7 +95,7 @@ https://appstoreconnect.apple.com → **My Apps → ＋ → New App**
 ## 5. プライバシーポリシー（必須）
 
 アプリ内に **`/privacy` ページを用意済み** → 公開URLは
-`https://r2-v.vercel.app/privacy`（独自ドメインにしたらそれに合わせる）。
+`https://road-to-lexus.vercel.app/privacy`（独自ドメインにしたらそれに合わせる）。
 App Store Connect の「プライバシーポリシー URL」にこれを入れる。
 
 **提出前にやること**：[`app/privacy/page.tsx`](app/privacy/page.tsx) の `CONTACT` を、
