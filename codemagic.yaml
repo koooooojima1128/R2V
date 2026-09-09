@@ -5,15 +5,15 @@
 #  2. Teams → Integrations → App Store Connect
 #       App Store Connect(→ Users and Access → Integrations → App Store Connect API)で
 #       API キー(.p8 / Key ID / Issuer ID)を発行してアップロード。
-#       付けた名前を下の `integrations.app_store_connect` に書く。
+#       付けた名前を下の `integrations.app_store_connect` に書く（R2L_ASC_API_KEY）。
 #  3. Environment variables で変数グループ `supabase` を作成し、次を追加:
 #       NEXT_PUBLIC_SUPABASE_URL       = https://atbkhwlhtpkmpgysvlyt.supabase.co
 #       NEXT_PUBLIC_SUPABASE_ANON_KEY  = sb_publishable_...
-#  4. 下の BUNDLE_ID を自分のものに変更（例 com.koooooojima.r2l）。
-#     developer.apple.com → Certificates, IDs & Profiles → Identifiers で
-#     同じ ID を事前登録しておく。
-#  5. アプリアイコン: resources/icon.png (1024x1024, 透過なし) を置くと自動生成。
-#     無い場合はデフォルトアイコンでビルドされる（審査で要差し替え）。
+#  4. Team settings → Code signing identities → iOS certificates で
+#       Apple Distribution 証明書を1枚だけ「Generate certificate」して保管する。
+#       （毎ビルドで証明書を新規作成すると Apple の上限に達するため。古い証明書は
+#        developer.apple.com で Revoke してよい）
+#  5. アプリアイコン: resources/icon.png が無ければ scripts/make-icon.mjs が生成。
 
 workflows:
   ios-appstore:
@@ -21,13 +21,16 @@ workflows:
     instance_type: mac_mini_m2
     max_build_duration: 60
     integrations:
-      app_store_connect: R2L_ASC_API_KEY   # ← 手順2で付けた統合名に変更
+      app_store_connect: R2L_ASC_API_KEY
     environment:
+      # Codemagic が保管済み証明書＋API キーで、証明書の追加・プロファイル作成・
+      # プロジェクトへの署名設定までを自動で行う（手動の署名スクリプトは不要）。
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.roadtolexus.r2l
       groups:
         - supabase
       vars:
-        BUNDLE_ID: "com.roadtolexus.r2l"        # ← 自分の Bundle ID に変更
-        APPLE_TEAM_ID: "RRV3NJ2268"             # ← developer.apple.com の Team ID
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
       node: 20
@@ -63,20 +66,8 @@ workflows:
         script: |
           cd ios/App && pod install
 
-      - name: コード署名の準備
+      - name: 署名プロファイルを適用
         script: |
-          keychain initialize
-          # 秘密鍵を生成し、その鍵で新規の配布証明書＋App Store プロファイルを作成。
-          # 注: ビルドのたびに新しい証明書が作られる。Apple の上限（配布証明書 2〜3枚）
-          # に達したら、作成済み .p12 を Codemagic に保存する方式へ切り替えること。
-          CERT_KEY="$(mktemp)"
-          openssl genrsa 2048 > "$CERT_KEY"
-          app-store-connect fetch-signing-files "$BUNDLE_ID" \
-            --platform IOS \
-            --type IOS_APP_STORE \
-            --certificate-key=@file:"$CERT_KEY" \
-            --create
-          keychain add-certificates
           xcode-project use-profiles --project "ios/App/App.xcodeproj"
 
       - name: IPA をビルド
@@ -91,6 +82,4 @@ workflows:
       app_store_connect:
         auth: integration
         # App Store Connect にアップロードのみ（内部TestFlight/審査提出は画面から手動）。
-        # 外部TestFlightベータ審査に出したい場合のみ submit_to_testflight: true
-        # （その際は App Store Connect でテスト情報の入力が必要）。
         submit_to_testflight: false
