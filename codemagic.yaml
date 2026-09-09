@@ -23,14 +23,10 @@ workflows:
     integrations:
       app_store_connect: R2L_ASC_API_KEY
     environment:
-      # Codemagic が保管済み証明書＋API キーで、証明書の追加・プロファイル作成・
-      # プロジェクトへの署名設定までを自動で行う（手動の署名スクリプトは不要）。
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.roadtolexus.r2l
       groups:
         - supabase
       vars:
+        BUNDLE_ID: "com.roadtolexus.r2l"
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
       node: 20
@@ -66,8 +62,16 @@ workflows:
         script: |
           cd ios/App && pod install
 
-      - name: 署名プロファイルを適用
+      - name: コード署名の準備
         script: |
+          keychain initialize
+          # Codemagic の Team に保管した Apple Distribution 証明書をキーチェーンへ。
+          keychain add-certificates
+          # 保管済み証明書を使って App Store プロビジョニングプロファイルを作成／取得。
+          # （--certificate-key は付けない＝新規証明書を作らず既存を再利用する）
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
           xcode-project use-profiles --project "ios/App/App.xcodeproj"
 
       - name: IPA をビルド
