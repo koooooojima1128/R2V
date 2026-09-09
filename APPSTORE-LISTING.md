@@ -1,7 +1,7 @@
 # App Store Connect 入力内容（コピペ用）
 
 App Store Connect のフォームおよび Resolution Center への返信に使う文面。
-連絡先は `koooooojima1128@gmail.com`。
+連絡先は `roadtolex@gmail.com`。
 
 ---
 
@@ -97,7 +97,7 @@ User-generated content moderation:
 - Every entry and comment has a "報告" (report) action that writes to a moderation queue we review.
 - Every entry has "非表示" (hide from my view) and "取り消し" (delete).
 - Terms of Use with zero tolerance for objectionable content and abusive users: https://road-to-lexus.vercel.app/terms
-- Contact: koooooojima1128@gmail.com
+- Contact: roadtolex@gmail.com
 
 External services: Supabase (PostgreSQL database + Realtime sync), Vercel (static hosting of bundled front-end assets). No auth provider, payment processor, ads, analytics, tracking, or AI service.
 

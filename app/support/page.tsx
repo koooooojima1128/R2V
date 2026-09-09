@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: `${siteConfig.name} の使い方とお問い合わせ。`,
 };
 
-const CONTACT = "koooooojima1128@gmail.com";
+const CONTACT = "roadtolex@gmail.com";
 
 export default function SupportPage() {
   return (

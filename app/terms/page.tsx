@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const UPDATED = "2026年9月9日";
-const CONTACT = "koooooojima1128@gmail.com";
+const CONTACT = "roadtolex@gmail.com";
 
 export default function TermsPage() {
   return (
