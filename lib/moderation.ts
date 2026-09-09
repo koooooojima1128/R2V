@@ -17,12 +17,12 @@ const BANNED = [
   "セックス", "レイプ", "ちんこ", "まんこ",
 ];
 
-/** 大文字小文字・全半角・記号・空白を落として比較しやすくする。 */
+/** 大文字小文字・全半角を揃え、空白や区切り記号を落として比較しやすくする。 */
 function normalize(s: string): string {
   return (s ?? "")
     .toLowerCase()
     .normalize("NFKC")
-    .replace(/[^\p{L}\p{N}]+/gu, "");
+    .replace(/[\s._\-*=|/\\~^!?,;:'"`()[\]{}<>@#$%&+・…、。]+/g, "");
 }
 
 const NORMALIZED_BANNED = BANNED.map(normalize).filter(Boolean);
