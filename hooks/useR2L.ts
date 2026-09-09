@@ -4,10 +4,22 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase/client";
 import { siteConfig } from "@/lib/site";
+import { checkFields } from "@/lib/moderation";
 import { DEMO_COMMENTS, DEMO_LOGS } from "@/data/seed";
-import type { Comment, LpLog, NewComment, NewLpLog } from "@/lib/supabase/types";
+import type { Comment, LpLog, NewComment, NewLpLog, NewReport } from "@/lib/supabase/types";
 
 type ConnState = "connecting" | "live" | "demo" | "error";
+
+const HIDDEN_KEY = "r2l:hidden";
+
+function readHidden(): string[] {
+  try {
+    const raw = JSON.parse(localStorage.getItem(HIDDEN_KEY) || "[]");
+    return Array.isArray(raw) ? raw.filter((x) => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+}
 
 function prependUnique(list: LpLog[], row: LpLog): LpLog[] {
   if (list.some((r) => r.id === row.id)) return list;
@@ -22,9 +34,9 @@ function appendUnique(list: Comment[], row: Comment): Comment[] {
 /**
  * R2L の状態を1か所で持つフック。
  * - 初回ロード（lp_logs / comments）
- * - Supabase Realtime を購読し、INSERT / DELETE を全ユーザーの画面へ即時反映
- * - addLp / addComment で書き込み（自分の画面も Realtime イベントで更新される）
- * - 環境変数が無いときはデモデータでローカル動作
+ * - Supabase Realtime を購読し INSERT / DELETE を即時反映
+ * - addLp / addComment で書き込み（送信前に checkFields で不適切語をブロック）
+ * - addReport で不適切投稿を報告、hideLog で各自の端末から投稿を非表示
  */
 export function useR2L() {
   const [logs, setLogs] = useState<LpLog[]>([]);
@@ -32,6 +44,11 @@ export function useR2L() {
   const [loading, setLoading] = useState(true);
   const [conn, setConn] = useState<ConnState>(isSupabaseConfigured ? "connecting" : "demo");
   const [error, setError] = useState<string | null>(null);
+  const [hiddenIds, setHiddenIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setHiddenIds(readHidden());
+  }, []);
 
   // ── 初回ロード ──────────────────────────────────────────────
   useEffect(() => {
@@ -127,6 +144,9 @@ export function useR2L() {
 
   // ── 書き込み ───────────────────────────────────────────────
   const addLp = useCallback(async (input: NewLpLog) => {
+    const bad = checkFields(input.author, input.reason);
+    if (bad) throw new Error(bad);
+
     if (!isSupabaseConfigured) {
       const row: LpLog = {
         ...input,
@@ -141,6 +161,9 @@ export function useR2L() {
   }, []);
 
   const addComment = useCallback(async (input: NewComment) => {
+    const bad = checkFields(input.author, input.body);
+    if (bad) throw new Error(bad);
+
     if (!isSupabaseConfigured) {
       const row: Comment = {
         ...input,
@@ -164,6 +187,35 @@ export function useR2L() {
     if (error) throw new Error(error.message);
   }, []);
 
+  // ── モデレーション：報告 / 非表示 ─────────────────────────────
+  const addReport = useCallback(async (input: NewReport) => {
+    if (!isSupabaseConfigured) return; // デモモードでは記録先が無いので無視
+    const { error } = await supabase.from("reports").insert(input);
+    if (error) throw new Error(error.message);
+  }, []);
+
+  const hideLog = useCallback((id: string) => {
+    setHiddenIds((prev) => {
+      if (prev.includes(id)) return prev;
+      const next = [...prev, id];
+      try {
+        localStorage.setItem(HIDDEN_KEY, JSON.stringify(next));
+      } catch {
+        /* private mode などでは無視 */
+      }
+      return next;
+    });
+  }, []);
+
+  const unhideAll = useCallback(() => {
+    setHiddenIds([]);
+    try {
+      localStorage.removeItem(HIDDEN_KEY);
+    } catch {
+      /* 無視 */
+    }
+  }, []);
+
   return {
     logs,
     commentsByLog,
@@ -172,8 +224,12 @@ export function useR2L() {
     loading,
     conn,
     error,
+    hiddenIds,
     addLp,
     addComment,
     removeLp,
+    addReport,
+    hideLog,
+    unhideAll,
   };
 }

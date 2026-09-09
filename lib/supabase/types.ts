@@ -21,5 +21,15 @@ export type Member = {
   created_at: string;
 };
 
+export type Report = {
+  id: string;
+  target_type: "log" | "comment";
+  target_id: string;
+  reporter: string | null;
+  note: string | null;
+  created_at: string;
+};
+
 export type NewLpLog = Pick<LpLog, "author" | "amount" | "reason">;
 export type NewComment = Pick<Comment, "log_id" | "author" | "body">;
+export type NewReport = Pick<Report, "target_type" | "target_id" | "reporter" | "note">;

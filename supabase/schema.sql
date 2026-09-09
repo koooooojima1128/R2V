@@ -35,6 +35,17 @@ create table if not exists public.comments (
 );
 create index if not exists comments_log_id_idx on public.comments (log_id, created_at);
 
+-- ── reports : 不適切な投稿の報告（UGCモデレーション用） ────────────
+create table if not exists public.reports (
+  id          uuid primary key default gen_random_uuid(),
+  target_type text not null check (target_type in ('log', 'comment')),
+  target_id   uuid not null,
+  reporter    text,
+  note        text,
+  created_at  timestamptz not null default now()
+);
+create index if not exists reports_created_at_idx on public.reports (created_at desc);
+
 -- ── lp_summary : 合計 LP を返すビュー（クライアントでも計算するが確認用） ──
 create or replace view public.lp_summary as
 select
@@ -50,6 +61,7 @@ from public.lp_logs;
 alter table public.members  enable row level security;
 alter table public.lp_logs  enable row level security;
 alter table public.comments enable row level security;
+alter table public.reports  enable row level security;
 
 drop policy if exists "members read"    on public.members;
 drop policy if exists "members insert"  on public.members;
@@ -59,6 +71,7 @@ drop policy if exists "lp_logs delete"  on public.lp_logs;
 drop policy if exists "comments read"   on public.comments;
 drop policy if exists "comments insert" on public.comments;
 drop policy if exists "comments delete" on public.comments;
+drop policy if exists "reports insert"  on public.reports;
 
 create policy "members read"    on public.members  for select using (true);
 create policy "members insert"  on public.members  for insert with check (true);
@@ -70,6 +83,9 @@ create policy "lp_logs delete"  on public.lp_logs  for delete using (true);  -- 
 create policy "comments read"   on public.comments for select using (true);
 create policy "comments insert" on public.comments for insert with check (true);
 create policy "comments delete" on public.comments for delete using (true);
+
+-- reports は anon から insert のみ可（読み取り不可）。運営は Supabase 管理画面で確認する。
+create policy "reports insert"  on public.reports  for insert with check (true);
 
 -- ============================================================
 --  Realtime : 変更を全ユーザーへ配信するため publication に追加

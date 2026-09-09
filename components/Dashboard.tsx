@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import ProgressHero from "@/components/ProgressHero";
 import RankCard from "@/components/RankCard";
@@ -21,9 +22,13 @@ export default function Dashboard() {
     goal,
     loading,
     error,
+    hiddenIds,
     addLp,
     addComment,
     removeLp,
+    addReport,
+    hideLog,
+    unhideAll,
   } = useR2L();
 
   const [toast, setToast] = useState<string | null>(null);
@@ -35,6 +40,10 @@ export default function Dashboard() {
 
   const handleRecorded = useCallback((amount: number) => {
     setToast(recordToast(amount));
+  }, []);
+
+  const handleReported = useCallback(() => {
+    setToast("報告を受け付けました。ご協力ありがとうございます。");
   }, []);
 
   return (
@@ -74,12 +83,35 @@ export default function Dashboard() {
           onNameChange={setName}
           onComment={addComment}
           onDelete={removeLp}
+          onReport={addReport}
+          onHide={hideLog}
+          onReported={handleReported}
+          hiddenIds={hiddenIds}
+          onUnhideAll={unhideAll}
           loading={loading}
         />
       </div>
 
-      <footer className="mt-12 text-center text-xs text-muted">
-        1 LP = {siteConfig.yenPerLp.toLocaleString("ja-JP")}円 ／ 目標 {goal} LP ・ レクサス買って爆モテ
+      <footer className="mt-12 space-y-2 text-center text-xs text-muted">
+        <p>1 LP = {siteConfig.yenPerLp.toLocaleString("ja-JP")}円 ／ 目標 {goal} LP</p>
+        <p>
+          不適切な内容・迷惑行為は禁止です。各投稿の「報告」または
+          <Link href="/support" className="text-accent underline">
+            サポート
+          </Link>
+          からご連絡ください。
+        </p>
+        <p className="flex flex-wrap justify-center gap-x-3">
+          <Link href="/terms" className="underline underline-offset-2 hover:text-text">
+            利用規約
+          </Link>
+          <Link href="/privacy" className="underline underline-offset-2 hover:text-text">
+            プライバシー
+          </Link>
+          <Link href="/support" className="underline underline-offset-2 hover:text-text">
+            サポート
+          </Link>
+        </p>
       </footer>
 
       <AnimatePresence>

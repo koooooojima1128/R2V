@@ -7,9 +7,8 @@ export const metadata: Metadata = {
   description: `${siteConfig.name} のプライバシーポリシー。`,
 };
 
-const UPDATED = "2026年9月8日";
-/** App Store 提出前に、公開してよい連絡先へ置き換えてください。 */
-const CONTACT = "（連絡先メールアドレスを記入）";
+const UPDATED = "2026年9月9日";
+const CONTACT = "koooooojima1128@gmail.com";
 
 export default function PrivacyPage() {
   return (
@@ -93,7 +92,20 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-base font-bold text-text">6. 児童のプライバシー</h2>
+          <h2 className="font-display text-base font-bold text-text">6. コンテンツのモデレーション</h2>
+          <p className="mt-2 text-text/80">
+            不適切な語を含む投稿は送信時に自動でブロックされます。各投稿・コメントの
+            「報告」から通報でき、報告内容は運営（Supabase 上の管理画面）で確認します。
+            「非表示」で自分の画面から特定の投稿を除外することもできます。詳しくは{" "}
+            <Link href="/terms" className="text-accent underline">
+              利用規約
+            </Link>
+            をご覧ください。
+          </p>
+        </section>
+
+        <section>
+          <h2 className="font-display text-base font-bold text-text">7. 児童のプライバシー</h2>
           <p className="mt-2 text-text/80">
             本アプリは特定年齢層を対象に設計・宣伝しておらず、児童から意図的に
             情報を収集することはありません。
@@ -101,7 +113,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-base font-bold text-text">7. ポリシーの変更</h2>
+          <h2 className="font-display text-base font-bold text-text">8. ポリシーの変更</h2>
           <p className="mt-2 text-text/80">
             本ポリシーは必要に応じて改定されます。重要な変更がある場合は
             本ページで告知します。
@@ -109,7 +121,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-base font-bold text-text">8. お問い合わせ</h2>
+          <h2 className="font-display text-base font-bold text-text">9. お問い合わせ</h2>
           <p className="mt-2 text-text/80">
             本ポリシーおよびデータの取り扱いに関するお問い合わせ先：{CONTACT}
           </p>

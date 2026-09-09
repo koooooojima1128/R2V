@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import CommentThread from "@/components/CommentThread";
 import { formatLp, timeAgo } from "@/lib/format";
-import type { Comment, LpLog, NewComment } from "@/lib/supabase/types";
+import type { Comment, LpLog, NewComment, NewReport } from "@/lib/supabase/types";
 
 type Props = {
   log: LpLog;
@@ -13,9 +13,12 @@ type Props = {
   onNameChange: (name: string) => void;
   onComment: (input: NewComment) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
+  onReport: (input: NewReport) => Promise<void>;
+  onHide: (id: string) => void;
+  onReported: () => void;
 };
 
-/** タイムラインの1カード。LP の増減 ＋ コメント欄。 */
+/** タイムラインの1カード。LP の増減 ＋ コメント欄 ＋ モデレーション操作。 */
 export default function LogCard({
   log,
   comments,
@@ -23,9 +26,28 @@ export default function LogCard({
   onNameChange,
   onComment,
   onDelete,
+  onReport,
+  onHide,
+  onReported,
 }: Props) {
   const [open, setOpen] = useState(false);
   const positive = Number(log.amount) >= 0;
+
+  async function handleReport() {
+    const note = window.prompt("この記録を報告します。理由（任意）:");
+    if (note === null) return;
+    try {
+      await onReport({
+        target_type: "log",
+        target_id: log.id,
+        reporter: myName.trim() || null,
+        note: note.trim() || null,
+      });
+      onReported();
+    } catch {
+      /* 失敗時は静かに無視（ネットワーク等） */
+    }
+  }
 
   return (
     <motion.li
@@ -54,12 +76,24 @@ export default function LogCard({
             {log.reason || <span className="text-muted">（理由なし）</span>}
           </p>
 
-          <div className="mt-2 flex items-center gap-3 text-xs">
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
             <button
               onClick={() => setOpen((v) => !v)}
               className="text-muted transition hover:text-text"
             >
               💬 コメント{comments.length > 0 ? ` ${comments.length}` : ""}
+            </button>
+            <button
+              onClick={handleReport}
+              className="text-muted/80 transition hover:text-text"
+            >
+              報告
+            </button>
+            <button
+              onClick={() => onHide(log.id)}
+              className="text-muted/80 transition hover:text-text"
+            >
+              非表示
             </button>
             <button
               onClick={() => {
@@ -80,6 +114,8 @@ export default function LogCard({
           myName={myName}
           onNameChange={onNameChange}
           onSubmit={onComment}
+          onReport={onReport}
+          onReported={onReported}
         />
       )}
     </motion.li>

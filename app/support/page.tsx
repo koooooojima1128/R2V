@@ -7,8 +7,7 @@ export const metadata: Metadata = {
   description: `${siteConfig.name} の使い方とお問い合わせ。`,
 };
 
-/** App Store 提出前に、公開してよい連絡先へ置き換えてください。 */
-const CONTACT = "（連絡先メールアドレスを記入）";
+const CONTACT = "koooooojima1128@gmail.com";
 
 export default function SupportPage() {
   return (
@@ -40,6 +39,36 @@ export default function SupportPage() {
             <li>各記録にコメント（応援・野次）を残せる</li>
             <li>間違えたら記録の「取り消し」で削除できる</li>
           </ol>
+        </section>
+
+        <section>
+          <h2 className="font-display text-base font-bold text-text">
+            不適切な投稿を見つけたら
+          </h2>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-text/80">
+            <li>
+              各記録・コメントの「<span className="font-medium text-text">報告</span>」から
+              運営に通報できます。報告は運営が確認し、規約違反の投稿は削除します。
+            </li>
+            <li>
+              「<span className="font-medium text-text">非表示</span>」で、その投稿を
+              自分の画面から除外できます。
+            </li>
+            <li>
+              「<span className="font-medium text-text">取り消し</span>」で投稿を削除できます。
+            </li>
+            <li>
+              不適切な語を含む投稿は、送信時に自動でブロックされます。
+            </li>
+          </ul>
+          <p className="mt-2 text-text/80">
+            緊急の場合や対応が必要な場合は、下記の連絡先まで直接ご連絡ください。
+            禁止事項は{" "}
+            <Link href="/terms" className="text-accent underline">
+              利用規約
+            </Link>
+            に記載しています。
+          </p>
         </section>
 
         <section>

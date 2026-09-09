@@ -1,7 +1,7 @@
 # App Store Connect 入力内容（コピペ用）
 
-Phase 5 で App Store Connect のフォームに貼り付ける文面。日本語ローカライズ想定。
-`（連絡先メールアドレス）` と URL は自分のものに置き換えること。
+App Store Connect のフォームおよび Resolution Center への返信に使う文面。
+連絡先は `koooooojima1128@gmail.com`。
 
 ---
 
@@ -9,26 +9,29 @@ Phase 5 で App Store Connect のフォームに貼り付ける文面。日本�
 
 | 欄 | 値 |
 |---|---|
-| App 名 | `R2L` （重複して弾かれたら `R2L - Road to Lexus`） |
+| App 名 | `R2L`（作成済み・Apple ID 6809658635） |
 | サブタイトル（30字以内） | `友達と貯めて、称号を上げる` |
-| プライマリカテゴリ | ファイナンス（Finance） |
-| セカンダリカテゴリ | ライフスタイル（Lifestyle） |
-| 年齢レーティング | 4+（すべての質問「なし」） |
+| プライマリカテゴリ | ファイナンス |
+| セカンダリカテゴリ | ライフスタイル |
+| 年齢レーティング | 4+（すべて「なし」） |
 | 価格 | 無料 |
 | サポート URL | `https://road-to-lexus.vercel.app/support` |
-| マーケティング URL | （空欄で可） |
+| マーケティング URL | （空欄） |
 | プライバシーポリシー URL | `https://road-to-lexus.vercel.app/privacy` |
-| バージョン | `1.0.0` |
+| コンテンツ配信権 | サードパーティのコンテンツを含まない（オリジナルのみ） |
+
+## スクリーンショット必要サイズ（この App Store Connect の枠）
+
+- **iPhone 6.5"** … `1284 × 2778`（透過なし・RGB）
+- **iPad 13"** … `2048 × 2732`（透過なし・RGB）
 
 ---
 
-## プロモーションテキスト（170字以内・審査なしで後から変更可）
+## プロモーションテキスト（170字以内）
 
 ```
 友達みんなで目標金額を貯めるための共有アプリ。誰かが「＋1 LP」と記録すると、全員の画面の合計と称号がその場で更新。アルトから始まり、貯まるほどモテ称号がランクアップします。
 ```
-
----
 
 ## 説明（Description）
 
@@ -42,21 +45,19 @@ R2L（Road to Lexus）は、友人グループで一つの目標金額を一緒�
 「誰が / いくら / 理由」を入力して記録するだけ。バイト代が入ったら＋、衝動買いしたら−。ゆるい家計簿のように使えます。
 
 ■ 称号システム
-累計 LP に応じて称号がランクアップ。
-Alto Solitary（孤高の軽自動車）から始まり、HIMARAYA Riser、F SPORT Seducer …と進み、500 LP 到達で Ultimate Lexus Lover。目標到達までのモチベーションになります。
+累計 LP に応じて称号がランクアップ。Alto Solitary（孤高の軽自動車）から始まり、500 LP 到達で Ultimate Lexus Lover。目標到達までのモチベーションになります。
 
 ■ コメントで盛り上がる
 それぞれの記録に、応援や野次をコメントで残せます。
 
+■ モデレーション
+不適切な語を含む投稿は自動でブロック。各投稿・コメントは「報告」で通報、「非表示」で自分の画面から除外、「取り消し」で削除できます。禁止事項は利用規約に記載しています。
+
 ■ ログイン不要
 アカウント登録はありません。共有された相手とだけ使ってください。
-
-※ 目標金額・単位・称号の文言は自由に読み替えて使えます（車の購入、旅行資金、共同貯金など）。
 ```
 
----
-
-## キーワード（100字以内・カンマ区切り）
+## キーワード（100字以内）
 
 ```
 貯金,目標,共有,ポイント,友達,グループ,家計簿,割り勘,モチベーション,称号,リアルタイム,貯める
@@ -64,47 +65,75 @@ Alto Solitary（孤高の軽自動車）から始まり、HIMARAYA Riser、F SPO
 
 ---
 
-## App Privacy（アプリのプライバシー）回答
+## App のプライバシー（回答）
 
 | 質問 | 回答 |
 |---|---|
-| データを収集するか | **はい** |
-| 収集する種類 | **User Content**（利用者が入力した表示名、記録の理由テキスト、コメント本文） |
-| 用途 | **アプリの機能**（App Functionality）のみ |
-| ユーザーIDに紐づくか | **いいえ**（アカウントなし） |
-| トラッキングに使うか | **いいえ** |
-| 位置情報・連絡先・識別子・使用状況データ | **収集しない** |
+| データを収集するか | はい |
+| 収集する種類 | **ユーザーコンテンツ**（表示名、記録の理由テキスト、コメント本文） |
+| 用途 | **アプリの機能** のみ |
+| ユーザーIDに紐づくか | いいえ |
+| トラッキングに使うか | いいえ |
+| 位置情報・連絡先・識別子・使用状況データ | 収集しない |
 
 ---
 
-## 審査メモ（App Review Information → Notes）
+## App Review Information → Notes（審査メモ）
 
 ```
-本アプリは、特定の友人グループが1つの目標金額を共同管理するためのツールです。
-Supabase Realtime により、あるユーザーの操作が他の全ユーザーの画面へ即時同期されます
-（単一の共有状態を複数端末で編集する構成であり、既存Webサイトの単なるミラーではありません）。
+No account or login is required. The app opens directly to a shared dashboard.
 
-設計上ログインは不要です。審査用に、アプリ内の「クイック LP 操作」フォームから
-任意の名前・数値・理由を入力し「記録」を押すと、タイムラインと合計値が更新されることを
-ご確認ください。データはテスト後に削除いただいて問題ありません。
+To test the main feature:
+1. Launch the app.
+2. In "クイック LP 操作": type any name in "誰が", tap an amount (e.g. +1), optionally type a reason, then tap "記録".
+3. The total, progress bar and rank at the top update immediately.
+4. Tap "💬 コメント" on any entry to add a comment.
+5. Tap "取り消し" to delete an entry, "非表示" to hide it locally, "報告" to report it.
 
-プライバシーポリシー: https://road-to-lexus.vercel.app/privacy
-サポート: https://road-to-lexus.vercel.app/support
+Purpose: a lightweight shared savings tracker for a small private group of friends pooling money toward one goal. Data is a single shared state edited from multiple devices via Supabase Realtime; it is not a mirror of a website. Ages 17+.
+
+User-generated content moderation:
+- Objectionable words are blocked at submission time (client-side filter).
+- Every entry and comment has a "報告" (report) action that writes to a moderation queue we review.
+- Every entry has "非表示" (hide from my view) and "取り消し" (delete).
+- Terms of Use with zero tolerance for objectionable content and abusive users: https://road-to-lexus.vercel.app/terms
+- Contact: koooooojima1128@gmail.com
+
+External services: Supabase (PostgreSQL database + Realtime sync), Vercel (static hosting of bundled front-end assets). No auth provider, payment processor, ads, analytics, tracking, or AI service.
+
+Regional differences: none. Japanese-language only, no region-locked content, no location-based logic. Works consistently in all regions.
+
+Not a regulated industry: it is a personal savings tracker with no money movement (amounts are numbers entered manually). All UI text and the icon are original; no third-party or protected material.
+
+Privacy policy: https://road-to-lexus.vercel.app/privacy
+Support: https://road-to-lexus.vercel.app/support
 ```
-
-> ⚠️ それでも Guideline 4.2（最低限の機能）で却下される場合があります。
-> 却下されたら Resolution Center の文面を共有してください。プッシュ通知など
-> ネイティブ機能の追加で対応します。
 
 ---
 
-## スクリーンショット（必須：iPhone 6.7"）
+## Guideline 2.1 への返信（Resolution Center に貼る・英語）
 
-- 必要サイズ：**1290 × 2796 px**（縦）。最低1枚、推奨3〜5枚。
-- 用意の仕方（Macなしでも可）：
-  1. PC の Chrome で `https://road-to-lexus.vercel.app` を開く
-  2. F12 → デバイスツールバー（Ctrl+Shift+M）→ 解像度を `430 × 932`、DPR を `3` に設定
-  3. 「クイック LP 操作」でサンプル記録をいくつか入れて画面を作る
-  4. デバイスツールバーの「Capture screenshot」で保存 → 1290×2796 になっているか確認
-  5. App Store Connect のスクリーンショット欄にアップロード
-- 撮り終わったらサンプル記録は「取り消し」で消す（本番データを汚さない）。
+> **1. Screen recording**
+> Attached / linked below. It launches the app, then: enter name → select amount → tap Record → totals and rank update in real time → open a comment thread → add a comment → tap Report on an entry → tap Undo to delete it. (No account, login, deletion flow, or paid content exists in the app.)
+>
+> **2. Purpose & target audience**
+> R2L is a lightweight shared savings tracker for a small private group of friends pooling money toward one goal (in our case, buying a car). Problem: friends saving toward a shared goal have no simple way to see everyone's contributions in one live place; spreadsheets aren't real-time and need accounts. Value: one shared screen — anyone enters "who / how much / why" and every member's screen updates instantly (total, progress bar, and a playful rank that levels up). Members can comment on each entry. Target audience: groups of 3–6 friends saving toward a common purchase or trip. Ages 17+.
+>
+> **3. Setup / access instructions**
+> No account, login, or sample file is required. The app opens directly to the shared dashboard. To exercise the main feature: (1) Launch the app. (2) In "クイック LP 操作": type any name, tap an amount such as +1, optionally type a reason, tap "記録". (3) The total, progress bar and rank update immediately. (4) Tap "💬 コメント" on an entry to comment. (5) Tap "取り消し" to delete, "非表示" to hide, "報告" to report. All data is shared in real time across every device that opens the app.
+>
+> **4. External services**
+> - Supabase (supabase.com): hosted PostgreSQL database + Realtime; stores entries/comments and syncs changes to all connected clients.
+> - Vercel (vercel.com): static hosting for the front-end assets that are bundled inside the app.
+> No authentication provider, payment processor, advertising SDK, analytics, tracking, or AI service is used.
+>
+> **5. Regional differences**
+> None. The app functions identically in all regions. It is Japanese-language only, contains no region-locked content, and makes no location-based decisions.
+>
+> **6. Regulated industry / protected material**
+> Not applicable. The app is a personal savings tracker; it is not a bank or financial institution and performs no money movement — amounts are just numbers entered manually. It contains no third-party or protected material; all UI text and the app icon are original.
+>
+> **User-generated content handling (per Guideline 1.2)**
+> The app filters objectionable words at submission time, provides a "Report" action on every entry and comment that feeds a moderation queue we review, provides "Hide" and "Delete" on every entry, publishes contact information, and has a Terms of Use with zero tolerance for objectionable content and abusive users (https://road-to-lexus.vercel.app/terms). We remove violating content and restrict abusive users within a reasonable time.
+
+同じ内容を **App Review Information → Notes** にも貼ること。
