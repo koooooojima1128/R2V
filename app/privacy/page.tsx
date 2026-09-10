@@ -95,8 +95,10 @@ export default function PrivacyPage() {
           <h2 className="font-display text-base font-bold text-text">6. コンテンツのモデレーション</h2>
           <p className="mt-2 text-text/80">
             不適切な語を含む投稿は送信時に自動でブロックされます。各投稿・コメントの
-            「報告」から通報でき、報告内容は運営（Supabase 上の管理画面）で確認します。
-            「非表示」で自分の画面から特定の投稿を除外することもできます。詳しくは{" "}
+            「報告」ボタン、またはアプリ内フッター記載の {CONTACT} 宛メールで通報できます。
+            運営は報告を確認し、規約違反の投稿を24時間以内に削除し、違反した利用者の
+            アクセスをブロックします。「非表示」で自分の画面から特定の投稿を除外することも
+            できます。詳しくは{" "}
             <Link href="/terms" className="text-accent underline">
               利用規約
             </Link>

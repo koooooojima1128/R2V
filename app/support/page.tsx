@@ -47,8 +47,13 @@ export default function SupportPage() {
           </h2>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-text/80">
             <li>
-              各記録・コメントの「<span className="font-medium text-text">報告</span>」から
-              運営に通報できます。報告は運営が確認し、規約違反の投稿は削除します。
+              各記録・コメントの「<span className="font-medium text-text">報告</span>」ボタン、
+              またはアプリ内フッター記載のメール（{CONTACT}）で運営に通報できます。
+            </li>
+            <li>
+              運営は報告を確認し、規約違反の投稿を
+              <span className="font-medium text-text">24時間以内に削除</span>し、
+              違反を繰り返す利用者のアクセスをブロックします。
             </li>
             <li>
               「<span className="font-medium text-text">非表示</span>」で、その投稿を
@@ -57,17 +62,14 @@ export default function SupportPage() {
             <li>
               「<span className="font-medium text-text">取り消し</span>」で投稿を削除できます。
             </li>
-            <li>
-              不適切な語を含む投稿は、送信時に自動でブロックされます。
-            </li>
+            <li>不適切な語を含む投稿は、送信時に自動でブロックされます。</li>
           </ul>
           <p className="mt-2 text-text/80">
-            緊急の場合や対応が必要な場合は、下記の連絡先まで直接ご連絡ください。
-            禁止事項は{" "}
+            禁止事項と対応方針は{" "}
             <Link href="/terms" className="text-accent underline">
               利用規約
             </Link>
-            に記載しています。
+            に記載しています。本アプリは 17+（成人向け）です。
           </p>
         </section>
 

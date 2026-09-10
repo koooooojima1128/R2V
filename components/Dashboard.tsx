@@ -92,15 +92,31 @@ export default function Dashboard() {
         />
       </div>
 
-      <footer className="mt-12 space-y-2 text-center text-xs text-muted">
+      <footer className="mt-12 space-y-3 text-center text-xs text-muted">
         <p>1 LP = {siteConfig.yenPerLp.toLocaleString("ja-JP")}円 ／ 目標 {goal} LP</p>
-        <p>
-          不適切な内容・迷惑行為は禁止です。各投稿の「報告」または
-          <Link href="/support" className="text-accent underline">
-            サポート
-          </Link>
-          からご連絡ください。
-        </p>
+
+        <div className="mx-auto max-w-md space-y-1.5 rounded-xl border border-border bg-surface px-4 py-3 text-left leading-relaxed">
+          <p className="font-semibold text-text">不適切な内容の報告（17+）</p>
+          <p>
+            誹謗中傷・わいせつ・差別・迷惑行為などの投稿は禁止です。各記録・コメントの
+            「<span className="font-medium text-text">報告</span>」ボタン、または下記メールで
+            通報してください。運営は報告を確認し、規約違反の投稿を
+            <span className="font-medium text-text">24時間以内に削除</span>し、
+            違反を繰り返す利用者のアクセスをブロックします。
+          </p>
+          <p>
+            連絡先：
+            <a
+              href={`mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
+                "R2L 不適切な内容の報告",
+              )}`}
+              className="text-accent underline"
+            >
+              {siteConfig.contactEmail}
+            </a>
+          </p>
+        </div>
+
         <p className="flex flex-wrap justify-center gap-x-3">
           <Link href="/terms" className="underline underline-offset-2 hover:text-text">
             利用規約

@@ -15,6 +15,8 @@ export const siteConfig = {
   goalLp: 500,
   /** 1 LP あたりの円。 */
   yenPerLp: 10_000,
+  /** モデレーション・削除依頼の連絡先（アプリ内・各ポリシーページに表示）。 */
+  contactEmail: "roadtolex@gmail.com",
   /** クイック操作ボタンの候補（円ではなく LP）。 */
   quickAmounts: [-3, -1, -0.5, 0.5, 1, 3] as number[],
 

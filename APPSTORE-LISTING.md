@@ -137,3 +137,22 @@ Support: https://road-to-lexus.vercel.app/support
 > The app filters objectionable words at submission time, provides a "Report" action on every entry and comment that feeds a moderation queue we review, provides "Hide" and "Delete" on every entry, publishes contact information, and has a Terms of Use with zero tolerance for objectionable content and abusive users (https://road-to-lexus.vercel.app/terms). We remove violating content and restrict abusive users within a reasonable time.
 
 同じ内容を **App Review Information → Notes** にも貼ること。
+
+---
+
+## Guideline 1.2（2回目の却下）への返信
+
+App Store Connect でやること：
+1. **年齢制限を 17+ に変更**（アプリ情報 → 年齢制限指定 → 編集 → UGC の質問に「はい」／未成年に不適切な項目を選び 17+ にする）
+2. 新ビルド（フッターに連絡先＋24時間対応の明記あり）を選択
+3. 下記を Resolution Center に返信 ＋ Notes に反映
+
+> We have addressed all three points in Guideline 1.2:
+>
+> **1. Age rating now reflects 17+.** We updated the age rating questionnaire so the app is rated 17+.
+>
+> **2. Acting on reports within 24 hours — removing content and ejecting the user.** Our Terms of Use (https://road-to-lexus.vercel.app/terms , section 3) now states explicitly that we review every report and, within 24 hours, delete content that violates the rules and block the offending user's access (disabling writes and rotating/revoking the shared URL). The app already lets any participant remove any post ("取り消し"/Undo) and hide any post ("非表示"/Hide); reports are collected in a moderation queue we monitor.
+>
+> **3. Contact information inside the app + ability to report.** The main screen footer now shows, directly in the app UI (not behind a link): the rules, the 24-hour removal + user-block policy, and a contact email (roadtolex@gmail.com) with a "Report inappropriate content" mailto link. In addition, every entry and every comment has a "報告" (Report) button. Objectionable words are also blocked at submission time.
+>
+> No account or login exists; the app opens directly to the shared dashboard. Test: type a name, tap an amount, tap 記録; tap 報告 / 非表示 / 取り消し on any entry; the contact email and reporting instructions are visible in the footer.

@@ -58,15 +58,25 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-base font-bold text-text">3. モデレーション</h2>
+          <h2 className="font-display text-base font-bold text-text">
+            3. モデレーション（不適切コンテンツへの対応）
+          </h2>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-text/80">
             <li>不適切な語を含む投稿は、送信時に自動的にブロックされます。</li>
             <li>各投稿・コメントの「報告」から、問題のある内容を運営に通報できます。</li>
+            <li>アプリ内フッターおよび {CONTACT} 宛のメールでも報告を受け付けます。</li>
             <li>各投稿の「非表示」で、その内容を自分の画面から除外できます。</li>
             <li>各投稿は「取り消し」で削除できます。</li>
             <li>
-              報告を受けた内容は運営が確認し、規約違反と判断した投稿は削除し、
-              悪質な利用者のアクセスを制限します。対応は合理的な期間内に行います。
+              <span className="font-medium text-text">
+                運営は報告を受けてから24時間以内に対応します。
+              </span>
+              規約違反と判断した投稿は削除し、違反した利用者のアクセスを
+              ブロックします（書き込みの無効化、共有URLの変更・失効を含みます）。
+            </li>
+            <li>
+              本アプリは 17+（成人向け）として提供します。年齢に満たない方は
+              利用しないでください。
             </li>
           </ul>
         </section>
