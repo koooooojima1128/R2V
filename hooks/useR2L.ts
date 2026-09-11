@@ -11,10 +11,11 @@ import type { Comment, LpLog, NewComment, NewLpLog, NewReport } from "@/lib/supa
 type ConnState = "connecting" | "live" | "demo" | "error";
 
 const HIDDEN_KEY = "r2l:hidden";
+const BLOCKED_KEY = "r2l:blocked-authors";
 
-function readHidden(): string[] {
+function readList(key: string): string[] {
   try {
-    const raw = JSON.parse(localStorage.getItem(HIDDEN_KEY) || "[]");
+    const raw = JSON.parse(localStorage.getItem(key) || "[]");
     return Array.isArray(raw) ? raw.filter((x) => typeof x === "string") : [];
   } catch {
     return [];
@@ -36,7 +37,7 @@ function appendUnique(list: Comment[], row: Comment): Comment[] {
  * - 初回ロード（lp_logs / comments）
  * - Supabase Realtime を購読し INSERT / DELETE を即時反映
  * - addLp / addComment で書き込み（送信前に checkFields で不適切語をブロック）
- * - addReport で不適切投稿を報告、hideLog で各自の端末から投稿を非表示
+ * - addReport で不適切投稿を報告、hideLog で投稿を非表示、blockAuthor で投稿者をブロック
  */
 export function useR2L() {
   const [logs, setLogs] = useState<LpLog[]>([]);
@@ -45,9 +46,11 @@ export function useR2L() {
   const [conn, setConn] = useState<ConnState>(isSupabaseConfigured ? "connecting" : "demo");
   const [error, setError] = useState<string | null>(null);
   const [hiddenIds, setHiddenIds] = useState<string[]>([]);
+  const [blockedAuthors, setBlockedAuthors] = useState<string[]>([]);
 
   useEffect(() => {
-    setHiddenIds(readHidden());
+    setHiddenIds(readList(HIDDEN_KEY));
+    setBlockedAuthors(readList(BLOCKED_KEY));
   }, []);
 
   // ── 初回ロード ──────────────────────────────────────────────
@@ -187,7 +190,7 @@ export function useR2L() {
     if (error) throw new Error(error.message);
   }, []);
 
-  // ── モデレーション：報告 / 非表示 ─────────────────────────────
+  // ── モデレーション：報告 / 非表示 / ブロック ───────────────────
   const addReport = useCallback(async (input: NewReport) => {
     if (!isSupabaseConfigured) return; // デモモードでは記録先が無いので無視
     const { error } = await supabase.from("reports").insert(input);
@@ -216,6 +219,31 @@ export function useR2L() {
     }
   }, []);
 
+  /** この投稿者の記録・コメントを、今後この端末の画面に表示しないようにする。 */
+  const blockAuthor = useCallback((name: string) => {
+    const key = name.trim();
+    if (!key) return;
+    setBlockedAuthors((prev) => {
+      if (prev.includes(key)) return prev;
+      const next = [...prev, key];
+      try {
+        localStorage.setItem(BLOCKED_KEY, JSON.stringify(next));
+      } catch {
+        /* 無視 */
+      }
+      return next;
+    });
+  }, []);
+
+  const unblockAll = useCallback(() => {
+    setBlockedAuthors([]);
+    try {
+      localStorage.removeItem(BLOCKED_KEY);
+    } catch {
+      /* 無視 */
+    }
+  }, []);
+
   return {
     logs,
     commentsByLog,
@@ -225,11 +253,14 @@ export function useR2L() {
     conn,
     error,
     hiddenIds,
+    blockedAuthors,
     addLp,
     addComment,
     removeLp,
     addReport,
     hideLog,
     unhideAll,
+    blockAuthor,
+    unblockAll,
   };
 }

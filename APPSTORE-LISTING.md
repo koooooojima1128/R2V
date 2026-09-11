@@ -156,3 +156,28 @@ App Store Connect でやること：
 > **3. Contact information inside the app + ability to report.** The main screen footer now shows, directly in the app UI (not behind a link): the rules, the 24-hour removal + user-block policy, and a contact email (roadtolex@gmail.com) with a "Report inappropriate content" mailto link. In addition, every entry and every comment has a "報告" (Report) button. Objectionable words are also blocked at submission time.
 >
 > No account or login exists; the app opens directly to the shared dashboard. Test: type a name, tap an amount, tap 記録; tap 報告 / 非表示 / 取り消し on any entry; the contact email and reporting instructions are visible in the footer.
+
+---
+
+## Guideline 1.2（3回目の却下 — フルチェックリスト）への返信
+
+**⚠️ この却下は「Version reviewed: 1.0 (29815669)」＝前回直したビルドではなく、それより前のビルドが再審査されていた。
+提出前に必ずバージョンページの「ビルド」が最新（このリリースのもの）になっているか確認すること。**
+
+対応した6項目：
+
+> 1. **Age rating**: Set to the highest tier our questionnaire produces (Unrestricted Web Access = Yes, User-Generated Content = Yes). No violence/sexual/gambling content exists that would qualify for a higher tier — happy to adjust further if you tell us which answer to change.
+>
+> 2. **Require users to agree to terms (EULA) with an explicit zero-tolerance statement**: The app now shows a mandatory consent screen on first launch (before any other screen is usable). It states that objectionable content and abusive users are not tolerated at all, that violating content is removed within 24 hours, and that violating users are blocked. The user must tap "同意して利用を開始する" (Agree & Start) to proceed; there is no way to dismiss it otherwise. Full Terms: https://road-to-lexus.vercel.app/terms
+>
+> 3. **A method for filtering objectionable content**: Text is checked against a blocklist at submission time and rejected before it is posted.
+>
+> 4. **A mechanism for users to flag objectionable content**: Every entry and every comment has a "報告" (Report) button that submits to our moderation queue.
+>
+> 5. **A mechanism for users to block abusive users**: Every entry now has a "投稿者をブロック" (Block this poster) action. Once blocked, that person's entries and comments are hidden from the reporting user's view on that device going forward.
+>
+> 6. **A mechanism for users to immediately remove posts from the feed**: "取り消し" (Undo/Delete) removes any entry in real time for every connected user.
+>
+> **Acting within 24 hours + contact info in-app**: unchanged from our previous reply — stated in the Terms (zero tolerance, 24-hour removal + block) and the app's main-screen footer, which shows the contact email (roadtolex@gmail.com) directly in the UI alongside the same 24-hour policy.
+>
+> This submission is build [ここに新ビルド番号を書く]. Screen recording attached, showing: the mandatory consent screen on first launch → dashboard → record an entry → 報告 → 投稿者をブロック → 非表示 → 取り消し → footer with contact info.

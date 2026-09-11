@@ -13,13 +13,19 @@ type Props = {
   onDelete: (id: string) => Promise<void>;
   onReport: (input: NewReport) => Promise<void>;
   onHide: (id: string) => void;
+  onBlock: (author: string) => void;
   onReported: () => void;
   hiddenIds: string[];
   onUnhideAll: () => void;
+  blockedAuthors: string[];
+  onUnblockAll: () => void;
   loading: boolean;
 };
 
-/** LP 増減履歴のタイムライン（新しい順）。非表示にした投稿は各自の端末で除外される。 */
+/**
+ * LP 増減履歴のタイムライン（新しい順）。
+ * 非表示にした投稿・ブロックした投稿者の記録は、各自の端末でのみ除外される。
+ */
 export default function Timeline({
   logs,
   commentsByLog,
@@ -29,13 +35,18 @@ export default function Timeline({
   onDelete,
   onReport,
   onHide,
+  onBlock,
   onReported,
   hiddenIds,
   onUnhideAll,
+  blockedAuthors,
+  onUnblockAll,
   loading,
 }: Props) {
-  const visible = logs.filter((l) => !hiddenIds.includes(l.id));
-  const hiddenCount = logs.length - visible.length;
+  const visible = logs.filter(
+    (l) => !hiddenIds.includes(l.id) && !blockedAuthors.includes(l.author),
+  );
+  const removedCount = logs.length - visible.length;
 
   return (
     <section>
@@ -49,9 +60,15 @@ export default function Timeline({
         </p>
       ) : visible.length === 0 ? (
         <p className="rounded-xl border border-dashed border-border bg-surface p-6 text-center text-sm text-muted">
-          すべての記録を非表示にしています。
-          <button onClick={onUnhideAll} className="ml-1 text-accent underline">
-            再表示
+          表示できる記録がありません（非表示／ブロック中）。
+          <button
+            onClick={() => {
+              onUnhideAll();
+              onUnblockAll();
+            }}
+            className="ml-1 text-accent underline"
+          >
+            すべて解除
           </button>
         </p>
       ) : (
@@ -68,6 +85,7 @@ export default function Timeline({
                 onDelete={onDelete}
                 onReport={onReport}
                 onHide={onHide}
+                onBlock={onBlock}
                 onReported={onReported}
               />
             ))}
@@ -75,13 +93,19 @@ export default function Timeline({
         </ul>
       )}
 
-      {hiddenCount > 0 && visible.length > 0 && (
-        <button
-          onClick={onUnhideAll}
-          className="mt-3 text-xs text-muted underline underline-offset-2 transition hover:text-text"
-        >
-          非表示にした投稿 {hiddenCount} 件を再表示
-        </button>
+      {removedCount > 0 && visible.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted">
+          {hiddenIds.length > 0 && (
+            <button onClick={onUnhideAll} className="underline underline-offset-2 hover:text-text">
+              非表示の投稿を再表示（{hiddenIds.length}件）
+            </button>
+          )}
+          {blockedAuthors.length > 0 && (
+            <button onClick={onUnblockAll} className="underline underline-offset-2 hover:text-text">
+              ブロック中の投稿者を解除（{blockedAuthors.length}人）
+            </button>
+          )}
+        </div>
       )}
     </section>
   );

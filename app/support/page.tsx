@@ -60,7 +60,12 @@ export default function SupportPage() {
               自分の画面から除外できます。
             </li>
             <li>
-              「<span className="font-medium text-text">取り消し</span>」で投稿を削除できます。
+              「<span className="font-medium text-text">投稿者をブロック</span>」で、
+              その利用者の投稿を今後自分の画面に表示しないようにできます。
+            </li>
+            <li>
+              「<span className="font-medium text-text">取り消し</span>」で、
+              投稿者を問わず即座に投稿を削除できます。
             </li>
             <li>不適切な語を含む投稿は、送信時に自動でブロックされます。</li>
           </ul>

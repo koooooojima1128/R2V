@@ -3,10 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import EulaGate from "@/components/EulaGate";
 import ProgressHero from "@/components/ProgressHero";
 import RankCard from "@/components/RankCard";
 import QuickLpForm from "@/components/QuickLpForm";
 import Timeline from "@/components/Timeline";
+import { useEula } from "@/hooks/useEula";
 import { useMyName } from "@/hooks/useMyName";
 import { useR2L } from "@/hooks/useR2L";
 import { siteConfig } from "@/lib/site";
@@ -14,6 +16,7 @@ import { recordToast } from "@/lib/format";
 
 /** 全員共通の1画面。誰がアクセスしても同じデータをリアルタイム表示。 */
 export default function Dashboard() {
+  const { accepted, accept } = useEula();
   const { name: myName, setName } = useMyName();
   const {
     logs,
@@ -23,12 +26,15 @@ export default function Dashboard() {
     loading,
     error,
     hiddenIds,
+    blockedAuthors,
     addLp,
     addComment,
     removeLp,
     addReport,
     hideLog,
     unhideAll,
+    blockAuthor,
+    unblockAll,
   } = useR2L();
 
   const [toast, setToast] = useState<string | null>(null);
@@ -45,6 +51,18 @@ export default function Dashboard() {
   const handleReported = useCallback(() => {
     setToast("報告を受け付けました。ご協力ありがとうございます。");
   }, []);
+
+  const handleBlock = useCallback(
+    (author: string) => {
+      blockAuthor(author);
+      setToast(`「${author}」の投稿をブロックしました`);
+    },
+    [blockAuthor],
+  );
+
+  // 利用規約への同意が確認できるまでは何も描画しない（ちらつき防止）。
+  if (accepted === null) return null;
+  if (!accepted) return <EulaGate onAccept={accept} />;
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-8 sm:py-14">
@@ -85,9 +103,12 @@ export default function Dashboard() {
           onDelete={removeLp}
           onReport={addReport}
           onHide={hideLog}
+          onBlock={handleBlock}
           onReported={handleReported}
           hiddenIds={hiddenIds}
           onUnhideAll={unhideAll}
+          blockedAuthors={blockedAuthors}
+          onUnblockAll={unblockAll}
           loading={loading}
         />
       </div>
@@ -99,8 +120,9 @@ export default function Dashboard() {
           <p className="font-semibold text-text">不適切な内容の報告（17+）</p>
           <p>
             誹謗中傷・わいせつ・差別・迷惑行為などの投稿は禁止です。各記録・コメントの
-            「<span className="font-medium text-text">報告</span>」ボタン、または下記メールで
-            通報してください。運営は報告を確認し、規約違反の投稿を
+            「<span className="font-medium text-text">報告</span>」「
+            <span className="font-medium text-text">投稿者をブロック</span>」ボタン、
+            または下記メールで通報してください。運営は報告を確認し、規約違反の投稿を
             <span className="font-medium text-text">24時間以内に削除</span>し、
             違反を繰り返す利用者のアクセスをブロックします。
           </p>

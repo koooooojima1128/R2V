@@ -15,6 +15,7 @@ type Props = {
   onDelete: (id: string) => Promise<void>;
   onReport: (input: NewReport) => Promise<void>;
   onHide: (id: string) => void;
+  onBlock: (author: string) => void;
   onReported: () => void;
 };
 
@@ -28,6 +29,7 @@ export default function LogCard({
   onDelete,
   onReport,
   onHide,
+  onBlock,
   onReported,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -94,6 +96,16 @@ export default function LogCard({
               className="text-muted/80 transition hover:text-text"
             >
               非表示
+            </button>
+            <button
+              onClick={() => {
+                if (confirm(`「${log.author}」の投稿を今後すべて非表示にしますか？（この端末のみ）`)) {
+                  onBlock(log.author);
+                }
+              }}
+              className="text-muted/80 transition hover:text-neg"
+            >
+              投稿者をブロック
             </button>
             <button
               onClick={() => {

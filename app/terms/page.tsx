@@ -23,11 +23,17 @@ export default function TermsPage() {
       <p className="mt-1 text-xs text-muted">最終更新日：{UPDATED}</p>
 
       <div className="mt-8 space-y-8 text-sm leading-relaxed text-text/90">
-        <section>
-          <p>
-            本規約は、{siteConfig.name}（{siteConfig.fullName}、以下「本アプリ」）の
-            利用条件を定めるものです。本アプリを利用した時点で、本規約に同意したものと
-            みなします。
+        <section className="rounded-xl border border-border bg-surface p-4">
+          <p className="font-semibold text-text">
+            本アプリの起動時、本規約への同意（EULA）が必須です。同意しない場合は
+            本アプリを利用できません。
+          </p>
+          <p className="mt-2">
+            {siteConfig.name}（{siteConfig.fullName}、以下「本アプリ」）は、
+            不適切なコンテンツ・迷惑行為・悪質な利用者を
+            <span className="font-semibold text-text">一切許容しません（ゼロ・トレランス）</span>。
+            本アプリを利用した時点で、本規約に同意したものとみなします。本アプリは
+            17歳以上の方を対象としています。
           </p>
         </section>
 
@@ -66,7 +72,11 @@ export default function TermsPage() {
             <li>各投稿・コメントの「報告」から、問題のある内容を運営に通報できます。</li>
             <li>アプリ内フッターおよび {CONTACT} 宛のメールでも報告を受け付けます。</li>
             <li>各投稿の「非表示」で、その内容を自分の画面から除外できます。</li>
-            <li>各投稿は「取り消し」で削除できます。</li>
+            <li>
+              各投稿の「投稿者をブロック」で、その利用者の投稿を今後自分の画面に
+              表示しないようにできます。
+            </li>
+            <li>各投稿は「取り消し」で、投稿者を問わず即座に削除できます。</li>
             <li>
               <span className="font-medium text-text">
                 運営は報告を受けてから24時間以内に対応します。
