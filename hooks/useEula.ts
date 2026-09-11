@@ -17,8 +17,9 @@ export function useEula() {
     try {
       setAccepted(localStorage.getItem(EULA_KEY) === "1");
     } catch {
-      // localStorage が使えない環境ではブロックしない
-      setAccepted(true);
+      // localStorage が読めない場合は「未同意」を安全側のデフォルトにする
+      // （同意ゲートを必ず表示する）。
+      setAccepted(false);
     }
   }, []);
 
